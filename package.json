@@ -1,6 +1,6 @@
 {
 	"name": "bundle-import",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"type": "module",
 	"description": "Bundle and load a file using the import-from-string.",
 	"imports": {
