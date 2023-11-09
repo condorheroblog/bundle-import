@@ -1,5 +1,7 @@
+import alias from "@/alias.mjs";
+
 function main() {
-	return "Hello ESM!";
+	return alias;
 }
 
 export default main();

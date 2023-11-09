@@ -1,4 +1,4 @@
-import { getPkgType, guessFormat } from "#src";
+import { getPkgType, guessFormat, tsconfigPathsToRegExp } from "#src";
 import { describe, it } from "vitest";
 
 describe(getPkgType.name, () => {
@@ -35,5 +35,10 @@ describe(guessFormat.name, () => {
 		expect(guessFormat("index.cts", "module")).toBe("cjs");
 		expect(guessFormat("index.json", "module")).toBe("cjs");
 		expect(guessFormat("index.text", "module")).toBe("cjs");
+	});
+
+	it(`${tsconfigPathsToRegExp.name}`, async ({ expect }) => {
+		expect(tsconfigPathsToRegExp({})).toEqual([]);
+		expect(tsconfigPathsToRegExp({ "@/*": 12 })).toEqual([/^@\/.*$/]);
 	});
 });

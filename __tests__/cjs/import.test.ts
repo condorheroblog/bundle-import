@@ -21,4 +21,25 @@ describe(bundleImport.name + "in CJS Module", () => {
 		expect(mod.greet).toBe("hi");
 		expect(Object.keys(dependencies)[0]).toBe("fixtures/namedExport.cjs");
 	});
+
+	it("should work with __dirname", async ({ expect }) => {
+		const filepath = "./__tests__/cjs/fixtures/namedExport.cjs";
+		const { mod } = await bundleImport<{ __dirname__: string }>({ filepath });
+
+		expect(mod.__dirname__).toBe(__dirname + "/fixtures");
+	});
+
+	it("should work with __filename", async ({ expect }) => {
+		const filepath = "./__tests__/cjs/fixtures/namedExport.cjs";
+		const { mod } = await bundleImport<{ __filename__: string }>({ filepath });
+
+		expect(mod.__filename__).toBe(__dirname + "/fixtures/namedExport.cjs");
+	});
+
+	it("should work with tsconfig", async ({ expect }) => {
+		const filepath = "./fixtures/tsconfig.cjs";
+		const { mod } = await bundleImport<{ alias: string }>({ filepath, cwd: __dirname });
+
+		expect(mod.alias).toBe("Hi Alias");
+	});
 });

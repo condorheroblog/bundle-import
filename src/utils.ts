@@ -17,3 +17,9 @@ export function guessFormat(inputFile: string, type = getPkgType()) {
 	}
 	return "cjs";
 }
+
+export const tsconfigPathsToRegExp = (paths: Record<string, unknown>) => {
+	return Object.keys(paths).map((key) => {
+		return new RegExp(`^${key.replace(/\*/, ".*")}$`);
+	});
+};

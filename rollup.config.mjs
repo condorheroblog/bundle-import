@@ -37,7 +37,7 @@ const rollupConfig = [
 	},
 	{
 		input: "./src/index.ts",
-		plugins: [json(), dts({ respectExternal: true }), nodeExternals()],
+		plugins: [json(), dts(), nodeExternals()],
 		output: [{ file: "./dist/index.d.cts" }, { file: "./dist/index.d.mts" }],
 	},
 ];

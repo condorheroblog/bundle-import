@@ -1,21 +1,33 @@
-import type { buildBundler } from "import-from-string";
+import type { BuildOptions } from "import-from-string";
 
 export type BundleFormat = "cjs" | "esm";
 
 export interface BundleImportOptions {
+	/**
+	 * Project root directory
+	 */
 	cwd?: string;
+
 	/**
 	 * The filepath to bundle and require
 	 */
 	filepath: string;
+
+	/**
+	 * External packages
+	 */
+	external?: (string | RegExp)[];
+
+	/**
+	 * A custom tsconfig path to read `paths` option
+	 */
+	tsconfig?: string;
+
 	/**
 	 * esbuild options
 	 *
 	 */
-	esbuildOptions?: Parameters<typeof buildBundler>[0];
-
-	/** External packages */
-	external?: (string | RegExp)[];
+	esbuildOptions?: BuildOptions;
 
 	/**
 	 * Provide bundle format explicitly

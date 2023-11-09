@@ -16,7 +16,12 @@
 		"noFallthroughCasesInSwitch": true,
 
 		"paths": {
-			"#*": ["./*"]
+			"#*": [
+				"./*"
+			],
+			"@/*": [
+				"./playground/*"
+			],
 		}
 	}
 }

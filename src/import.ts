@@ -1,8 +1,11 @@
 import { JS_EXT_RE } from "./constants";
 import { moduleFromString } from "./moduleFromString";
+import { externalPlugin, injectFileScopePlugin } from "./plugins";
 import { resolveOptions } from "./resolveOptions";
 import type { BundleImportOptions, DependenciesType } from "./types";
-import { buildBundler, externalPlugin, injectFileScopePlugin } from "import-from-string";
+import { tsconfigPathsToRegExp } from "./utils";
+import { getTsconfig } from "get-tsconfig";
+import { buildBundler } from "import-from-string";
 import { dirname, basename, join } from "node:path";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,6 +21,7 @@ export function bundleImport<T = any>(
 		}
 
 		const resolved = resolveOptions(options);
+		const tsconfig = getTsconfig(resolved.cwd, options.tsconfig) ?? getTsconfig(resolved.cwd, "jsconfig.json");
 
 		try {
 			const result = await buildBundler({
@@ -30,7 +34,14 @@ export function bundleImport<T = any>(
 				metafile: true,
 				write: false,
 				...resolved.esbuildOptions,
-				plugins: [externalPlugin(), injectFileScopePlugin(), ...(resolved.esbuildOptions?.plugins ?? [])],
+				plugins: [
+					externalPlugin({
+						external: resolved.external,
+						notExternal: tsconfigPathsToRegExp(tsconfig?.config.compilerOptions?.paths ?? {}),
+					}),
+					injectFileScopePlugin(),
+					...(resolved.esbuildOptions?.plugins ?? []),
+				],
 			});
 
 			if (result.outputFiles) {

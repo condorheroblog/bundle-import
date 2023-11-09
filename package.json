@@ -57,7 +57,8 @@
 	},
 	"homepage": "https://github.com/condorheroblog/bundle-import#readme",
 	"dependencies": {
-		"import-from-string": "^0.0.3"
+		"get-tsconfig": "^4.7.2",
+		"import-from-string": "^0.0.4"
 	},
 	"simple-git-hooks": {
 		"pre-commit": "npx lint-staged"

@@ -13,7 +13,7 @@ export async function moduleFromString(code: string, options: ModuleFromStringOp
 		return await importFromString(code, {
 			filename: options.filename,
 			dirname: options.dirname,
-			skipBuild: true,
+			skipBuild: false,
 		});
 	} else {
 		return requireFromString(code, { filename: options.filename, dirname: options.dirname });

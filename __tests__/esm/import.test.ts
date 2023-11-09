@@ -26,4 +26,11 @@ describe(bundleImport.name + "in ESM Module", () => {
 		const { mod } = await bundleImport<{ metaURL: string }>({ filepath });
 		expect(mod.metaURL).toMatch("namedExport.mjs");
 	});
+
+	it("should work with tsconfig", async ({ expect }) => {
+		const filepath = "./fixtures/tsconfig.mjs";
+		const { mod } = await bundleImport<{ alias: string }>({ filepath, cwd: __dirname });
+
+		expect(mod.alias).toBe("Hi Alias");
+	});
 });

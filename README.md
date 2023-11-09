@@ -7,6 +7,13 @@
 
 Bundle and load a file using the import-from-string.
 
+## Difference from bundle-require
+
+Most of the code of Bundle-import comes from bundle-require. There is no objection to this, but Bundle-import does not generate temporary files when reading module contents, which can avoid conflicts with other tools. For example, the following two issues:
+
+1. [Tmp .mjs file in the current directory breaks other tools](https://github.com/egoist/bundle-require/issues/33)
+2. [vite 运行时，修改mock文件会生成很多个xxx.mjs文件](https://github.com/vbenjs/vite-plugin-mock/issues/98#issuecomment-1782467433)
+
 ## Features
 
 - Support ESM and CJS environments
@@ -58,12 +65,39 @@ main();
 
 #### options
 
+##### cwd
+
+Type: `string`\
+Default: `process.cwd()`
+
+Project root directory.
+
 ##### filename
 
 Type: `string`\
 Required: `true`
 
 The filepath to bundle and require.
+
+##### external
+
+Type: `(string | RegExp)[]`\
+Required: `[]`
+
+External packages.
+
+##### tsconfig
+
+Type: `string`\
+Required: `tsconfig.json`
+
+A custom tsconfig path to read `paths` option.
+
+##### format
+
+Type: `"cjs" | "esm"`\
+
+Provide bundle format explicitly to skip the default format inference.
 
 ##### esbuildOptions
 

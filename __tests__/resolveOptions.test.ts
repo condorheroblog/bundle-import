@@ -8,6 +8,8 @@ describe(resolveOptions.name, () => {
 		expect(resolved.esbuildOptions).toBeUndefined();
 		expect(resolved.format).toBe("esm");
 		expect(resolved.cwd).toMatch("bundle-import");
+		expect(resolved.tsconfig).toMatch("tsconfig.json");
+		expect(resolved.external).toEqual([]);
 	});
 
 	it(`${resolveOptions.name} - filepath option`, async ({ expect }) => {
@@ -35,5 +37,15 @@ describe(resolveOptions.name, () => {
 		expect(resolved1.format).toBe("cjs");
 		const resolved2 = resolveOptions({ filepath: "index.mjs", format: "cjs" });
 		expect(resolved2.format).toBe("cjs");
+	});
+
+	it(`${resolveOptions.name} - tsconfig option`, async ({ expect }) => {
+		const resolved = resolveOptions({ filepath: "index.js", tsconfig: "./path/to/index.ts" });
+		expect(resolved.tsconfig).toBe("./path/to/index.ts");
+	});
+
+	it(`${resolveOptions.name} - external option`, async ({ expect }) => {
+		const resolved = resolveOptions({ filepath: "index.js", external: ["./path/to/index.ts"] });
+		expect(resolved.external).toEqual(["./path/to/index.ts"]);
 	});
 });
