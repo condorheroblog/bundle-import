@@ -16,8 +16,8 @@ export function injectFileScopePlugin(): Plugin {
 		setup(build) {
 			build.initialOptions.define = {
 				...build.initialOptions.define,
-				__dirname: DIRNAME_VAR_NAME,
-				__filename: FILENAME_VAR_NAME,
+				"__dirname": DIRNAME_VAR_NAME,
+				"__filename": FILENAME_VAR_NAME,
 				"import.meta.url": IMPORT_META_URL_VAR_NAME,
 			};
 

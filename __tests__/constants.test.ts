@@ -2,7 +2,7 @@ import { JS_EXT_RE } from "#src";
 import { describe, it } from "vitest";
 
 describe("constants", () => {
-	it(`should match valid file extensions`, async ({ expect }) => {
+	it("should match valid file extensions", async ({ expect }) => {
 		expect(JS_EXT_RE.test(".js")).toBeTruthy();
 		expect(JS_EXT_RE.test(".cjs")).toBeTruthy();
 		expect(JS_EXT_RE.test(".jsx")).toBeTruthy();
@@ -13,7 +13,7 @@ describe("constants", () => {
 		expect(JS_EXT_RE.test(".mts")).toBeTruthy();
 	});
 
-	it(`should not match valid file extensions`, async ({ expect }) => {
+	it("should not match valid file extensions", async ({ expect }) => {
 		expect(JS_EXT_RE.test(".mjsx")).toBeFalsy();
 		expect(JS_EXT_RE.test(".cjsx")).toBeFalsy();
 		expect(JS_EXT_RE.test(".jtsx")).toBeFalsy();

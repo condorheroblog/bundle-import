@@ -2,9 +2,9 @@ import type { BundleFormat } from "./types";
 import { requireFromString, importFromString } from "import-from-string";
 
 export interface ModuleFromStringOptions {
-	format: BundleFormat;
-	dirname: string;
-	filename: string;
+	format: BundleFormat
+	dirname: string
+	filename: string
 }
 
 export async function moduleFromString(code: string, options: ModuleFromStringOptions) {
@@ -15,7 +15,8 @@ export async function moduleFromString(code: string, options: ModuleFromStringOp
 			dirname: options.dirname,
 			skipBuild: false,
 		});
-	} else {
+	}
+	else {
 		return requireFromString(code, { filename: options.filename, dirname: options.dirname });
 	}
 }

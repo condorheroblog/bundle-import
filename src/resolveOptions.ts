@@ -1,3 +1,5 @@
+import process from "node:process";
+
 import type { BundleImportOptions } from "./types";
 import { guessFormat } from "./utils";
 

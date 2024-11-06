@@ -3,7 +3,7 @@ import { describe, it } from "vitest";
 
 const { bundleImport } = require("#dist/index.cjs");
 
-describe(bundleImport.name + "in ESM Module", () => {
+describe(`${bundleImport.name}in ESM Module`, () => {
 	it("should work with `export const greet`", async ({ expect }) => {
 		const filepath = "./__tests__/esm/fixtures/namedExport.mjs";
 		const { mod, dependencies } = await bundleImport({ filepath });

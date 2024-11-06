@@ -8,14 +8,13 @@ import { getTsconfig } from "get-tsconfig";
 import { buildBundler } from "import-from-string";
 import { dirname, basename, join } from "node:path";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function bundleImport<T = any>(
 	options: BundleImportOptions,
 ): Promise<{
-	mod: T;
-	dependencies: DependenciesType;
-}> {
-	return new Promise(async (resolve, reject) => {
+		mod: T
+		dependencies: DependenciesType
+	}> {
+	return new Promise((resolve, reject) => {
 		if (!JS_EXT_RE.test(options.filepath)) {
 			throw new Error(`${options.filepath} is not a valid JS file`);
 		}
@@ -23,27 +22,25 @@ export function bundleImport<T = any>(
 		const resolved = resolveOptions(options);
 		const tsconfig = getTsconfig(resolved.cwd, options.tsconfig) ?? getTsconfig(resolved.cwd, "jsconfig.json");
 
-		try {
-			const result = await buildBundler({
-				entryPoints: [resolved.filepath],
-				absWorkingDir: resolved.cwd,
-				outfile: "out.js",
-				format: resolved.format,
-				platform: "node",
-				bundle: true,
-				metafile: true,
-				write: false,
-				...resolved.esbuildOptions,
-				plugins: [
-					externalPlugin({
-						external: resolved.external,
-						notExternal: tsconfigPathsToRegExp(tsconfig?.config.compilerOptions?.paths ?? {}),
-					}),
-					injectFileScopePlugin(),
-					...(resolved.esbuildOptions?.plugins ?? []),
-				],
-			});
-
+		buildBundler({
+			entryPoints: [resolved.filepath],
+			absWorkingDir: resolved.cwd,
+			outfile: "out.js",
+			format: resolved.format,
+			platform: "node",
+			bundle: true,
+			metafile: true,
+			write: false,
+			...resolved.esbuildOptions,
+			plugins: [
+				externalPlugin({
+					external: resolved.external,
+					notExternal: tsconfigPathsToRegExp(tsconfig?.config.compilerOptions?.paths ?? {}),
+				}),
+				injectFileScopePlugin(),
+				...(resolved.esbuildOptions?.plugins ?? []),
+			],
+		}).then(async (result) => {
 			if (result.outputFiles) {
 				const absFilePath = join(resolved.cwd, resolved.filepath);
 				const code = result.outputFiles[0].text;
@@ -62,8 +59,6 @@ export function bundleImport<T = any>(
 				mod: {} as T,
 				dependencies: {},
 			});
-		} catch (e) {
-			reject(e);
-		}
+		}).catch(reject);
 	});
 }

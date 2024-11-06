@@ -3,7 +3,7 @@ import { describe, it } from "vitest";
 
 const { bundleImport } = require("#dist/index.cjs");
 
-describe(bundleImport.name + "in CJS Module", () => {
+describe(`${bundleImport.name}in CJS Module`, () => {
 	it("should work with `exports.greet`", async ({ expect }) => {
 		const filepath = "./__tests__/cjs/fixtures/namedExport.cjs";
 		const { mod, dependencies } = await bundleImport({ filepath });
@@ -27,14 +27,14 @@ describe(bundleImport.name + "in CJS Module", () => {
 		const filepath = "./__tests__/cjs/fixtures/namedExport.cjs";
 		const { mod } = await bundleImport({ filepath });
 
-		expect(mod.__dirname__).toBe(__dirname + "/fixtures");
+		expect(mod.__dirname__).toBe(`${__dirname}/fixtures`);
 	});
 
 	it("should work with __filename", async ({ expect }) => {
 		const filepath = "./__tests__/cjs/fixtures/namedExport.cjs";
 		const { mod } = await bundleImport({ filepath });
 
-		expect(mod.__filename__).toBe(__dirname + "/fixtures/namedExport.cjs");
+		expect(mod.__filename__).toBe(`${__dirname}/fixtures/namedExport.cjs`);
 	});
 
 	it("should work with tsconfig", async ({ expect }) => {

@@ -36,7 +36,7 @@ npm install bundle-import
 ```mjs
 import { bundleImport } from "bundle-import";
 
-const { mod: mod1 } = await bundleImport({ filepath: "./fixtures/index.cjs", cwd: process.cwd() + "/playground" });
+const { mod: mod1 } = await bundleImport({ filepath: "./fixtures/index.cjs", cwd: `${process.cwd()}/playground` });
 console.log(mod1);
 
 const { mod: mod2 } = await bundleImport({ filepath: "./playground/fixtures/index.mjs" });
@@ -49,7 +49,7 @@ console.log(mod2.default, mod2);
 const { bundleImport } = require("bundle-import");
 
 async function main() {
-	const { mod: mod1 } = await bundleImport({ filepath: "./fixtures/index.cjs", cwd: process.cwd() + "/playground" });
+	const { mod: mod1 } = await bundleImport({ filepath: "./fixtures/index.cjs", cwd: `${process.cwd()}/playground` });
 	console.log(mod1);
 
 	const { mod: mod2 } = await bundleImport({ filepath: "./playground/fixtures/index.mjs" });
